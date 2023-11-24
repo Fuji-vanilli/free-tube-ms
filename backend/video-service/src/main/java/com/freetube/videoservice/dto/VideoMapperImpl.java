@@ -1,6 +1,7 @@
 package com.freetube.videoservice.dto;
 
 import com.freetube.videoservice.entities.Video;
+import com.freetube.videoservice.enumeration.VideoStatus;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
@@ -8,7 +9,7 @@ public class VideoMapperImpl implements VideoMapper {
     @Override
     public Video mapToVideo(VideoRequest request) {
         return Video.builder()
-                .videoStatus(request.getVideoStatus())
+                .videoStatus(VideoStatus.valueOf(request.getVideoStatus().toUpperCase()))
                 .title(request.getTitle())
                 .tags(request.getTags())
                 .thumbnailUrl(request.getThumbnailUrl())

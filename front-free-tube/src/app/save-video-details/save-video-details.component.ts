@@ -6,6 +6,7 @@ import { COMMA, ENTER} from '@angular/cdk/keycodes';
 import { ActivatedRoute } from '@angular/router';
 import { VideoService } from '../services/video.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { VideoDto } from '../model/video-dto';
 
 @Component({
   selector: 'app-save-video-details',
@@ -22,18 +23,31 @@ export class SaveVideoDetailsComponent implements OnInit {
   selectedFileName= '';
   videoId= '';
   fileSelected: boolean= false;
+  videoUrl: string= '';
+  thumbnailUrl: string= '';
 
   announcer = inject(LiveAnnouncer);
 
   constructor(public formBuilder: FormBuilder,
               private activateRoute: ActivatedRoute,
               private videoService: VideoService,
-              private thumbSnackBar: MatSnackBar) {
+              private snackBar: MatSnackBar) {
+
+                this.videoId= this.activateRoute.snapshot.params['videoId'];
+                this.videoService.getDetailsVideo(this.videoId).subscribe({
+                  next: video=> {
+                    console.log("video id "+this.videoId)
+                    this.videoUrl= video.videoUrl;
+                    this.thumbnailUrl= video.thumbnailUrl;
+                  },
+                  error: err=> {
+                    console.log("error to get video "+err);
+                  }
+                })
+            
 
   }
   ngOnInit(): void {
-    this.videoId= this.activateRoute.snapshot.params['videoId'];
-
     this.saveVideoForm= this.formBuilder.group({
       title: this.formBuilder.control('', Validators.required),
       description: this.formBuilder.control(''),
@@ -80,10 +94,21 @@ export class SaveVideoDetailsComponent implements OnInit {
   }
 
   saveVideoDetails() {
+    const videoMetaData: VideoDto= this.saveVideoForm.value;
+    videoMetaData.id= this.videoId;
+    videoMetaData.tags= this.tags;
 
+    this.videoService.saveVideo(videoMetaData).subscribe({
+      next: data=> {
+        this.snackBar.open("video details saved!", "OK");
+      }, 
+      error: err=> {
+        console.log(err);
+      }
+    });
     
   }
-  onFileSelected(event: Event) {
+  onFileSelected(event: Event) { 
     const target= event.target as HTMLInputElement;
     if (target.files && target.files.length> 0) {
       this.selectedFile= target.files[0];
@@ -95,7 +120,8 @@ export class SaveVideoDetailsComponent implements OnInit {
   onUpload() {
     this.videoService.uploadThumbnail(this.selectedFile, this.videoId).subscribe({
       next: value=> {
-        this.thumbSnackBar.open("thumbnail uploaded successfully!", "OK");
+        this.snackBar.open("thumbnail uploaded successfully!", "OK");
+        console.log("video id sanck bar "+this.videoId);
       },
       error: err=> {
         console.log(err);

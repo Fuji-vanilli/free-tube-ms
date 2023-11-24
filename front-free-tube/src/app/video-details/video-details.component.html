@@ -1,0 +1,19 @@
+<div fxLayout="row">
+    <div fxFlex="65%" class="video-details">
+        <app-video-player [videoUrl]="this.videoUrl" [videoWidth]="900" [videoHeight]="500"></app-video-player>
+        <div class="mat-title mt-3"> {{videoTitle}} </div>
+        <div fxLayout="row">
+            <div fxFlex="50%">
+                21th November 2023
+                <div> {{videoDescription}} </div>
+            </div>
+            <div fxFlex="50%"></div>
+        </div>
+    </div>
+    <div fxFlex="5%">
+
+    </div>
+    <div fxFlex="30%">
+        Suggestion bar
+    </div>
+</div>

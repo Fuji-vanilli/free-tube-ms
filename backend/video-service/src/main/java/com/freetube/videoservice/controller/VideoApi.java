@@ -3,6 +3,7 @@ package com.freetube.videoservice.controller;
 import com.freetube.videoservice.Utils.Response;
 import com.freetube.videoservice.dto.UploadVideoResponse;
 import com.freetube.videoservice.dto.VideoRequest;
+import com.freetube.videoservice.dto.VideoResponse;
 import com.freetube.videoservice.service.VideoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -31,5 +32,15 @@ public class VideoApi implements VideoController {
     @Override
     public ResponseEntity<Response> editVideo(VideoRequest request) {
         return ResponseEntity.ok(videoService.editVideo(request));
+    }
+
+    @Override
+    public VideoResponse getVideoDetails(String videoId) {
+        return videoService.getDetailsVideo(videoId);
+    }
+
+    @Override
+    public ResponseEntity<Response> saveVideoDetails(VideoRequest request) {
+        return ResponseEntity.ok(videoService.saveVideoDetails(request));
     }
 }

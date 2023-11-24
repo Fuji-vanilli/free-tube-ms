@@ -19,17 +19,17 @@ public class FileServiceImpl implements FileService{
     @Override
     public String uploadFile(MultipartFile file) {
         String originalFileName= file.getOriginalFilename();
-        Path pathFile= Paths.get(localDirectory, originalFileName);
+
         var fileNameExtension= StringUtils.getFilenameExtension(originalFileName);
 
-        var key= localDirectory+ "/"+originalFileName;
-
+        String newFileName= "VID_"+UUID.randomUUID().toString()+"."+ fileNameExtension;
+        Path pathFile= Paths.get(localDirectory, newFileName);
         try {
             file.transferTo(pathFile.toFile());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        return key;
+        return "../../assets/"+newFileName;
     }
 }

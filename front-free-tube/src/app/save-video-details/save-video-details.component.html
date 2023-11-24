@@ -56,7 +56,7 @@
                   </div>
                   <hr>
                   <div>
-                    <button mat-raised-button color="warn" (click)="onUpload()">Upload</button>
+                    <button type="submit" mat-raised-button color="warn" (click)="onUpload()">Upload</button>
                   </div>
                 </div>
               </label>
@@ -67,7 +67,7 @@
         </form>
     </div>
     <div fxFlex="30%">
-        Video Player
+      <app-video-player [videoUrl]="this.videoUrl" [videoHeight]="400" [videoWidth]="700" ></app-video-player>
     </div>
     <div fxFlex="20%">Hi</div>
 </div>

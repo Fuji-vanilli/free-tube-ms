@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { UploadVideoComponent } from './upload-video/upload-video.component';
@@ -24,6 +24,11 @@ import { VgControlsModule } from '@videogular/ngx-videogular/controls';
 import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
 import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { VideoPlayerComponent } from './video-player/video-player.component';
+import { AuthConfigModule } from './auth/auth-config.module';
+import { AuthInterceptor } from 'angular-auth-oidc-client';
+import { AppHttpInterceptor } from './interceptors/app-http.interceptor';
+import { VideoDetailsComponent } from './video-details/video-details.component';
 
 
 @NgModule({
@@ -31,7 +36,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     AppComponent,
     UploadVideoComponent,
     HeaderComponent,
-    SaveVideoDetailsComponent
+    SaveVideoDetailsComponent,
+    VideoPlayerComponent,
+    VideoDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +52,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatIconModule,
     MatSelectModule,
     MatFormFieldModule,
-    MatOptionModule,
+    MatOptionModule,  
     MatInputModule,
     FlexLayoutModule,
     MatChipsModule,
@@ -53,9 +60,16 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     VgControlsModule,
     VgOverlayPlayModule,
     VgBufferingModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    AuthConfigModule
   ],
-  providers: [],
+  providers: [
+    { 
+      provide: HTTP_INTERCEPTORS, 
+      useClass: AppHttpInterceptor, 
+      multi: true 
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

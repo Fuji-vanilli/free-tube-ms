@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { UploadVideoResponse } from '../upload-video/UploadVideoResponse';
+import { VideoDto } from '../model/video-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,14 @@ export class VideoService {
     formData.append('videoId', videoId);
 
     return this.http.patch(environment.backEndVideoHost+"/thumbnail", formData);
+  }
+
+  public getDetailsVideo(videoId: string) : Observable<VideoDto>{
+    return this.http.get<VideoDto>(environment.backEndVideoHost+"/details/"+videoId);
+  }
+
+  public saveVideo(videoDto: VideoDto): Observable<VideoDto> {
+    return this.http.put<VideoDto>(environment.backEndVideoHost+"/saveDetails", videoDto);
   }
 
 }

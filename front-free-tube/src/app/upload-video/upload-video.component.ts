@@ -70,6 +70,7 @@ export class UploadVideoComponent {
           this.videoService.uploadVideo(file).subscribe({
             next: resp=> {
               this.route.navigateByUrl('/save-video-details/'+resp.videoId);
+              console.log("video name"+resp.videoUrl);
             }
           })
         }

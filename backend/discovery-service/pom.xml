@@ -42,11 +42,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>software.amazon.awssdk</groupId>
-			<artifactId>aws-sdk-java</artifactId>
-			<version>2.20.109</version> <!-- Use the appropriate version -->
-		</dependency>
 
 	</dependencies>
 	<dependencyManagement>

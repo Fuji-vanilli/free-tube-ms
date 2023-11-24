@@ -15,7 +15,7 @@ public class VideoRequest {
     private String description;
     private String title;
     private Set<String> tags;
-    private VideoStatus videoStatus;
+    private String videoStatus;
     private String videoUrl;
     private String thumbnailUrl;
 }
