@@ -1,17 +1,18 @@
 package com.freetube.userservice.dto;
 
 import com.freetube.userservice.entities.User;
-import com.freetube.userservice.repositories.UserRepository;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class UserMapperImpl implements UserMapper{
     @Override
-    public User mapToUser(UserRequest request) {
+    public User mapToUser(UserDtoInfo request) {
         return User.builder()
-                .firstname(request.getFirstname())
-                .lastname(request.getLastname())
                 .email(request.getEmail())
+                .sub(request.getSub())
+                .picture(request.getPicture())
+                .firstname(request.getFamilyName())
+                .lastname(request.getName())
                 .build();
     }
 

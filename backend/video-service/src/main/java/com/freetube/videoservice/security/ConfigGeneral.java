@@ -20,7 +20,7 @@ public class ConfigGeneral {
     public JwtDecoder jwtDecoder() {
         NimbusJwtDecoder jwtDecoder= JwtDecoders.fromIssuerLocation(issuer);
 
-        OAuth2TokenValidator<Jwt> audienceValidator= new AudienceValidator(audience);
+        OAuth2TokenValidator<Jwt> audienceValidator= new AudienceTokenValidator(audience);
         OAuth2TokenValidator<Jwt> withIssuer= JwtValidators.createDefaultWithIssuer(issuer);
         OAuth2TokenValidator<Jwt> withAudience= new DelegatingOAuth2TokenValidator<Jwt>(withIssuer, audienceValidator);
 

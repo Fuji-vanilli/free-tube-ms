@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Data
 @AllArgsConstructor @NoArgsConstructor
@@ -19,10 +20,12 @@ public class VideoResponse {
     private String title;
     private String userId;
     private String videoUrl;
-    private BigDecimal likes;
-    private BigDecimal dislikes;
+    private AtomicInteger likes;
+    private AtomicInteger dislikes;
     private Set<String> tags;
     private VideoStatus videoStatus;
     private BigDecimal viewCount;
     private String thumbnailUrl;
+    private BigDecimal likeCount;
+    private BigDecimal dislikeCount;
 }

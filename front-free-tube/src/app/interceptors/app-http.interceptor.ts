@@ -22,12 +22,12 @@ export class AppHttpInterceptor implements HttpInterceptor {
         }
       );
       let newRequest= request.clone({
-        headers: request.headers.set('Authorization', 'Bearer '+this.accesToken)
+        headers: request.headers.set('Authorization', 'Bearer '+this.accesToken) 
       })
       return next.handle(newRequest).pipe(
-        catchError(err=> {
-          if(err.status== 401){
-            this.oidcSecurityService.logoff
+        catchError(err=> {  
+          if(err.status== 401) {
+            this.oidcSecurityService.logoff 
           }
           return throwError(err.message);
         })

@@ -66,7 +66,7 @@ import { VideoDetailsComponent } from './video-details/video-details.component';
   providers: [
     { 
       provide: HTTP_INTERCEPTORS, 
-      useClass: AppHttpInterceptor, 
+      useClass: AuthInterceptor, 
       multi: true 
     }
   ],

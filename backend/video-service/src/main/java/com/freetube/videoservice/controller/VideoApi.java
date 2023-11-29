@@ -8,14 +8,13 @@ import com.freetube.videoservice.service.VideoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import static com.freetube.videoservice.Utils.Root.APP_ROOT;
+import static com.freetube.videoservice.Utils.Root.APP_ROOT_VIDEO;
 
 @RestController
-@RequestMapping(APP_ROOT)
+@RequestMapping(APP_ROOT_VIDEO)
 @RequiredArgsConstructor
 public class VideoApi implements VideoController {
     private final VideoService videoService;
@@ -42,5 +41,10 @@ public class VideoApi implements VideoController {
     @Override
     public ResponseEntity<Response> saveVideoDetails(VideoRequest request) {
         return ResponseEntity.ok(videoService.saveVideoDetails(request));
+    }
+
+    @Override
+    public ResponseEntity<Response> likeVideo(String videoId) {
+        return ResponseEntity.ok(videoService.likeVideo(videoId));
     }
 }

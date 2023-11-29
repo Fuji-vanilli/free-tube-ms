@@ -7,6 +7,7 @@ import com.freetube.videoservice.dto.VideoRequest;
 import com.freetube.videoservice.dto.VideoResponse;
 import com.freetube.videoservice.entities.Video;
 import com.freetube.videoservice.enumeration.VideoStatus;
+import com.freetube.videoservice.repository.UserRepository;
 import com.freetube.videoservice.repository.VideoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,8 @@ public class VideoServiceImpl implements VideoService{
     private final FileService fileService;
     private final VideoRepository videoRepository;
     private final VideoMapper videoMapper;
+    private final UserService userService;
+
 
     @Override
     public UploadVideoResponse uploadVideo(MultipartFile file) {
@@ -155,6 +158,38 @@ public class VideoServiceImpl implements VideoService{
         Video video= videoOptional.get();
 
         return videoMapper.mapToVideoResponse(video);
+    }
+
+    @Override
+    public Response likeVideo(String videoId) {
+        Video video= videoRepository.findById(videoId)
+                .orElseThrow(()-> new IllegalArgumentException("Can't find video with the id: "+videoId+" into the database!"));
+
+        if (userService.isLikedVideo(videoId)) {
+            video.decrementLikes();
+            userService.removeFromLikedVideos(videoId);
+        } else if (userService.isDislikedVideo(videoId)) {
+            video.decrementDislikes();
+            userService.removeFromDislikedVideos(videoId);
+            video.incrementLikes();
+            userService.addToLikedVideos(videoId);
+        } else {
+            video.incrementLikes();
+            userService.addToLikedVideos(videoId);
+        }
+
+        video.incrementLikes();
+        userService.addToLikedVideos(videoId);
+
+        log.info("video: {} liked successfully!", videoId);
+        return generateResponse(
+                HttpStatus.OK,
+                null,
+                Map.of(
+                        "video", videoMapper.mapToVideoResponse(video)
+                ),
+                "video: "+videoId+" liked successfully!"
+        );
     }
 
     private Response generateResponse(HttpStatus status, URI location, Map<?, ?> data, String message){

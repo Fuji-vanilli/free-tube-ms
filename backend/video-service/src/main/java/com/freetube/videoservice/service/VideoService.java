@@ -12,5 +12,5 @@ public interface VideoService {
     Response editVideo(VideoRequest videoRequest);
     Response uploadThumbnail(MultipartFile file, String videoId);
     VideoResponse getDetailsVideo(String videoId);
-
+    Response likeVideo(String videoId);
 }

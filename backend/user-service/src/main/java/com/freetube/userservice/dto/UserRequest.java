@@ -6,7 +6,11 @@ import lombok.*;
 @AllArgsConstructor @NoArgsConstructor
 @Builder
 public class UserRequest {
-    private String firstname;
-    private String lastname;
+    private String id;
+    private String sub;
+    private String givenName;
+    private String familyName;
+    private String name;
+    private String picture;
     private String email;
 }

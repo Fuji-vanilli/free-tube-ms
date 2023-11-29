@@ -14,7 +14,7 @@ import { AuthModule } from 'angular-auth-oidc-client';
             useRefreshToken: true,
             secureRoutes: ['http://localhost:7100'],
             customParamsAuthRequest: {
-                audience: 'http://localhost:7100'
+                audience: 'http://localhost:7100' 
             }
 
         }
