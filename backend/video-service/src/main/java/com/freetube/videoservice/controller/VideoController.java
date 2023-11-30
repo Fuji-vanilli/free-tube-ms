@@ -22,4 +22,6 @@ public interface VideoController {
     public ResponseEntity<Response> saveVideoDetails(@RequestBody VideoRequest request);
     @PatchMapping("/{videoId}/like")
     public ResponseEntity<Response> likeVideo(@PathVariable String videoId);
+    @PatchMapping("/{videoId}/dislike")
+    public ResponseEntity<Response> dislikeVideo(@PathVariable String videoId);
 }

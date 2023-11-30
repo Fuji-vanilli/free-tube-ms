@@ -44,8 +44,7 @@ export class SaveVideoDetailsComponent implements OnInit {
                     console.log("error to get video "+err);
                   }
                 })
-            
-
+          
   }
   ngOnInit(): void {
     this.saveVideoForm= this.formBuilder.group({

@@ -31,6 +31,8 @@ public class VideoMapperImpl implements VideoMapper {
                 .userId(video.getUserId())
                 .viewCount(video.getViewCount())
                 .videoStatus(video.getVideoStatus())
+                .likeCount(video.getLikeCount())
+                .dislikeCount(video.getDislikeCount())
                 .build();
     }
 }

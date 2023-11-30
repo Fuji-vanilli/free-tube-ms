@@ -13,4 +13,5 @@ public interface VideoService {
     Response uploadThumbnail(MultipartFile file, String videoId);
     VideoResponse getDetailsVideo(String videoId);
     Response likeVideo(String videoId);
+    Response dislikeVideo(String videoId);
 }

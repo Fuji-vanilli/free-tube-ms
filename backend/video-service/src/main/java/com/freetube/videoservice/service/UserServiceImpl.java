@@ -75,7 +75,10 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User getCurrentUser() {
-        final String sub = ((Jwt) (SecurityContextHolder.getContext().getAuthentication().getPrincipal())).getClaim("sub");
+        //final String sub = ((Jwt) (SecurityContextHolder.getContext().getAuthentication().getPrincipal())).getClaim("sub");
+
+        final Jwt principal = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        final String sub = principal.getClaim("sub");
 
         return userRepository.findBySub(sub)
                 .orElseThrow(()-> new IllegalArgumentException("Can't find user with the sub: "+sub+" into the database!"));

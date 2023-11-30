@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.Map;
@@ -177,11 +178,11 @@ public class VideoServiceImpl implements VideoService{
             video.incrementLikes();
             userService.addToLikedVideos(videoId);
         }
-
-        video.incrementLikes();
-        userService.addToLikedVideos(videoId);
+        video.setLikeCount(BigDecimal.valueOf(video.getLikes().get()));
 
         log.info("video: {} liked successfully!", videoId);
+        videoRepository.save(video);
+
         return generateResponse(
                 HttpStatus.OK,
                 null,
@@ -189,6 +190,38 @@ public class VideoServiceImpl implements VideoService{
                         "video", videoMapper.mapToVideoResponse(video)
                 ),
                 "video: "+videoId+" liked successfully!"
+        );
+    }
+
+    @Override
+    public Response dislikeVideo(String videoId) {
+        Video video= videoRepository.findById(videoId)
+                .orElseThrow(()-> new IllegalArgumentException("Can't find video with the id: "+videoId));
+
+        if (userService.isDislikedVideo(videoId)) {
+            video.decrementDislikes();
+            userService.removeFromDislikedVideos(videoId);
+        } else if (userService.isLikedVideo(videoId)) {
+            video.decrementLikes();
+            userService.removeFromLikedVideos(videoId);
+            video.incrementDislikes();
+            userService.addToDislikedVideos(videoId);
+        } else {
+            video.incrementDislikes();
+            userService.addToDislikedVideos(videoId);
+        }
+        video.setDislikeCount(BigDecimal.valueOf(video.getDislikes().get()));
+
+        log.info("video: {} disliked successfully!", videoId);
+        videoRepository.save(video);
+
+        return generateResponse(
+                HttpStatus.OK,
+                null,
+                Map.of(
+                        "video", videoMapper.mapToVideoResponse(video)
+                ),
+                "video: "+videoId+" disliked successfully!"
         );
     }
 
