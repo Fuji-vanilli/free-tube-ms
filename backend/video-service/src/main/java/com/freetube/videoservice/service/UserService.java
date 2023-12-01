@@ -13,4 +13,5 @@ public interface UserService {
     Response removeFromDislikedVideos(String videoId);
     boolean isLikedVideo(String videoId);
     boolean isDislikedVideo(String videoId);
+    void addVideoToHistory(String videoId);
 }

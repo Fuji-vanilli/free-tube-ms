@@ -4,6 +4,7 @@ import com.freetube.videoservice.Utils.Response;
 import com.freetube.videoservice.dto.UploadVideoResponse;
 import com.freetube.videoservice.dto.VideoRequest;
 import com.freetube.videoservice.dto.VideoResponse;
+import com.freetube.videoservice.entities.Video;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface VideoService {
@@ -14,4 +15,5 @@ public interface VideoService {
     VideoResponse getDetailsVideo(String videoId);
     Response likeVideo(String videoId);
     Response dislikeVideo(String videoId);
+    void increaseVideoCount(Video video);
 }

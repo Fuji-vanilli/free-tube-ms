@@ -150,13 +150,11 @@ public class VideoServiceImpl implements VideoService{
 
     @Override
     public VideoResponse getDetailsVideo(String videoId) {
-        Optional<Video> videoOptional= videoRepository.findById(videoId);
-        if (videoOptional.isEmpty()) {
-            log.error("video with the id: {} doesn't exist on the database", videoId);
-            return null;
-        }
+        Video video= videoRepository.findById(videoId)
+                .orElseThrow(()-> new IllegalArgumentException("Can't find video with the id: "+videoId));
 
-        Video video= videoOptional.get();
+        increaseVideoCount(video);
+        userService.addVideoToHistory(videoId);
 
         return videoMapper.mapToVideoResponse(video);
     }
@@ -223,6 +221,12 @@ public class VideoServiceImpl implements VideoService{
                 ),
                 "video: "+videoId+" disliked successfully!"
         );
+    }
+ 
+    @Override
+    public void increaseVideoCount(Video video) {
+        video.incrementViewCount();
+        videoRepository.save(video);
     }
 
     private Response generateResponse(HttpStatus status, URI location, Map<?, ?> data, String message){

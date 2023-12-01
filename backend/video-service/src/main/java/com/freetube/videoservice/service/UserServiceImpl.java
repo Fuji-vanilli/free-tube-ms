@@ -172,6 +172,13 @@ public class UserServiceImpl implements UserService{
                 .anyMatch(dislikedVideo-> dislikedVideo.equals(videoId));
     }
 
+    @Override
+    public void addVideoToHistory(String videoId) {
+        User user= getCurrentUser();
+        user.addToVideoHistory(videoId);
+        userRepository.save(user);
+    }
+
     private Response generateResponse(HttpStatus status, URI location, Map<?, ?> data, String message){
         return Response.builder()
                 .timeStamp(LocalDateTime.now())

@@ -24,7 +24,7 @@ public class VideoResponse {
     private AtomicInteger dislikes;
     private Set<String> tags;
     private VideoStatus videoStatus;
-    private BigDecimal viewCount;
+    private AtomicInteger viewCount;
     private String thumbnailUrl;
     private BigDecimal likeCount;
     private BigDecimal dislikeCount;
