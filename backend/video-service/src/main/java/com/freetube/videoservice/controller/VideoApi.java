@@ -1,15 +1,16 @@
 package com.freetube.videoservice.controller;
 
 import com.freetube.videoservice.Utils.Response;
-import com.freetube.videoservice.dto.UploadVideoResponse;
-import com.freetube.videoservice.dto.VideoRequest;
-import com.freetube.videoservice.dto.VideoResponse;
+import com.freetube.videoservice.dto.*;
+import com.freetube.videoservice.entities.Comment;
 import com.freetube.videoservice.service.VideoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Set;
 
 import static com.freetube.videoservice.Utils.Root.APP_ROOT_VIDEO;
 
@@ -51,5 +52,20 @@ public class VideoApi implements VideoController {
     @Override
     public ResponseEntity<Response> dislikeVideo(String videoId) {
         return ResponseEntity.ok(videoService.dislikeVideo(videoId));
+    }
+
+    @Override
+    public ResponseEntity<CommentResponse> addComment(String videoId, CommentRequest request) {
+        return ResponseEntity.ok(videoService.addComment(videoId, request));
+    }
+
+    @Override
+    public ResponseEntity<Set<CommentResponse>> allComments(String videoId) {
+        return ResponseEntity.ok(videoService.allComments(videoId));
+    }
+
+    @Override
+    public ResponseEntity<Set<VideoResponse>> allVideos(int page, int size) {
+        return ResponseEntity.ok(videoService.allVideos(page, size));
     }
 }

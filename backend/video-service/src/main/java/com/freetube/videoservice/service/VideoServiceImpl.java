@@ -1,16 +1,17 @@
 package com.freetube.videoservice.service;
 
 import com.freetube.videoservice.Utils.Response;
-import com.freetube.videoservice.dto.UploadVideoResponse;
-import com.freetube.videoservice.dto.VideoMapper;
-import com.freetube.videoservice.dto.VideoRequest;
-import com.freetube.videoservice.dto.VideoResponse;
+import com.freetube.videoservice.dto.*;
+import com.freetube.videoservice.entities.Comment;
 import com.freetube.videoservice.entities.Video;
 import com.freetube.videoservice.enumeration.VideoStatus;
+import com.freetube.videoservice.repository.CommentRepository;
 import com.freetube.videoservice.repository.UserRepository;
 import com.freetube.videoservice.repository.VideoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.stereotype.Service;
@@ -22,6 +23,8 @@ import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +35,8 @@ public class VideoServiceImpl implements VideoService{
     private final VideoRepository videoRepository;
     private final VideoMapper videoMapper;
     private final UserService userService;
-
+    private final CommentMapper commentMapper;
+    private final CommentRepository commentRepository;
 
     @Override
     public UploadVideoResponse uploadVideo(MultipartFile file) {
@@ -150,8 +154,7 @@ public class VideoServiceImpl implements VideoService{
 
     @Override
     public VideoResponse getDetailsVideo(String videoId) {
-        Video video= videoRepository.findById(videoId)
-                .orElseThrow(()-> new IllegalArgumentException("Can't find video with the id: "+videoId));
+        Video video= getVideo(videoId);
 
         increaseVideoCount(video);
         userService.addVideoToHistory(videoId);
@@ -161,8 +164,7 @@ public class VideoServiceImpl implements VideoService{
 
     @Override
     public Response likeVideo(String videoId) {
-        Video video= videoRepository.findById(videoId)
-                .orElseThrow(()-> new IllegalArgumentException("Can't find video with the id: "+videoId+" into the database!"));
+        Video video= getVideo(videoId);
 
         if (userService.isLikedVideo(videoId)) {
             video.decrementLikes();
@@ -193,8 +195,7 @@ public class VideoServiceImpl implements VideoService{
 
     @Override
     public Response dislikeVideo(String videoId) {
-        Video video= videoRepository.findById(videoId)
-                .orElseThrow(()-> new IllegalArgumentException("Can't find video with the id: "+videoId));
+        Video video= getVideo(videoId);
 
         if (userService.isDislikedVideo(videoId)) {
             video.decrementDislikes();
@@ -229,6 +230,39 @@ public class VideoServiceImpl implements VideoService{
         videoRepository.save(video);
     }
 
+    @Override
+    public CommentResponse addComment(String videoId, CommentRequest request) {
+        Video video = getVideo(videoId);
+
+        Comment comment = commentMapper.mapToComment(request);
+        comment.setVideoId(videoId);
+        commentRepository.save(comment);
+        log.info("new comment added successfully to video: {}", videoId);
+
+        video.addComment(comment);
+        videoRepository.save(video);
+        log.info("comment added to video: {}", videoId);
+
+        return commentMapper.mapToCommentResponse(comment);
+    }
+
+    @Override
+    public Set<CommentResponse> allComments(String videoId) {
+        Video video= getVideo(videoId);
+
+        return video.getComments().stream()
+                .map(commentMapper::mapToCommentResponse)
+                .collect(Collectors.toSet());
+    }
+
+    @Override
+    public Set<VideoResponse> allVideos(int page, int size) {
+        final Pageable pageable = PageRequest.of(page, size);
+        return videoRepository.findAll(pageable).stream()
+                .map(videoMapper::mapToVideoResponse)
+                .collect(Collectors.toSet());
+    }
+
     private Response generateResponse(HttpStatus status, URI location, Map<?, ?> data, String message){
         return Response.builder()
                 .timeStamp(LocalDateTime.now())
@@ -238,5 +272,9 @@ public class VideoServiceImpl implements VideoService{
                 .data(data)
                 .message(message)
                 .build();
+    }
+    private Video getVideo(String videoId) {
+        return videoRepository.findById(videoId)
+                .orElseThrow(()-> new IllegalArgumentException("Can't find video with the id: "+videoId));
     }
 }

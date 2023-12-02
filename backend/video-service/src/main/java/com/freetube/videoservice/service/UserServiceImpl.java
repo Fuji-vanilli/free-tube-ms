@@ -23,7 +23,9 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -212,6 +214,17 @@ public class UserServiceImpl implements UserService{
         userRepository.save(user);
     }
 
+    @Override
+    public Set<String> getUserHistories(String userId) {
+        User user= getUseById(userId);
+
+        return user.getVideoHistory();
+    }
+
+    private User getUseById(String userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(()-> new IllegalArgumentException("Can't find user with the id: "+userId));
+    }
     private Response generateResponse(HttpStatus status, URI location, Map<?, ?> data, String message){
         return Response.builder()
                 .timeStamp(LocalDateTime.now())

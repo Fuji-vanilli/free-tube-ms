@@ -4,6 +4,9 @@ import com.freetube.videoservice.Utils.Response;
 import com.freetube.videoservice.dto.UserResponse;
 import com.freetube.videoservice.entities.User;
 
+import java.util.List;
+import java.util.Set;
+
 public interface UserService {
     UserResponse register(String tokenValue);
     UserResponse subscribeToUser(String userId);
@@ -16,6 +19,5 @@ public interface UserService {
     boolean isLikedVideo(String videoId);
     boolean isDislikedVideo(String videoId);
     void addVideoToHistory(String videoId);
-
-
+    Set<String> getUserHistories(String userId);
 }

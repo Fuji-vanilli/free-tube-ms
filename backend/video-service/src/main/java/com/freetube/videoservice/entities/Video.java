@@ -1,5 +1,6 @@
 package com.freetube.videoservice.entities;
 
+import com.ctc.wstx.shaded.msv_core.grammar.ConcurExp;
 import com.freetube.videoservice.enumeration.VideoStatus;
 import lombok.*;
 import org.springframework.data.annotation.Id;
@@ -8,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Getter @Setter
@@ -26,9 +28,13 @@ public class Video {
     private Set<String> tags;
     private VideoStatus videoStatus;
     private AtomicInteger viewCount= new AtomicInteger(0);
+    private Set<Comment> comments= ConcurrentHashMap.newKeySet();
     private String thumbnailUrl;
     private BigDecimal likeCount;
     private BigDecimal dislikeCount;
+    public void addComment(Comment comment) {
+        comments.add(comment);
+    }
 
     public void incrementLikes() {
         this.likes.incrementAndGet();
