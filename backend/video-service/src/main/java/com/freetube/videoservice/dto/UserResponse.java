@@ -16,7 +16,7 @@ public class UserResponse {
     private String sub;
     private Set<String> subscribeToUsers;
     private Set<String> subscribers;
-    private List<String> videoHistory;
+    private Set<String> videoHistory;
     private Set<String> likesVideos;
     private Set<String> dislikesVideos;
 }

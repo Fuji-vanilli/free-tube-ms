@@ -24,7 +24,6 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.LocalDateTime;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -71,6 +70,40 @@ public class UserServiceImpl implements UserService{
         log.info("new user register successfully!!!");
 
         return userMapper.mapToUserResponse(user);
+    }
+
+    @Override
+    public UserResponse subscribeToUser(String userId) {
+        User currentUser= getCurrentUser();
+        User user= userRepository.findById(userId)
+                .orElseThrow(()-> new IllegalArgumentException("Can't find user with the id: "+userId));
+
+        currentUser.addSubscribeToUsers(userId);
+        userRepository.save(currentUser);
+        log.info("current user subscribed to user: {} successfully!", userId);
+
+        user.addSubscribers(currentUser.getId());
+        userRepository.save(user);
+        log.info("user: {} subscribed successfully!", currentUser.getId());
+
+        return userMapper.mapToUserResponse(currentUser);
+    }
+
+    @Override
+    public UserResponse unSubscribeToUser(String userId) {
+        User currentUser= getCurrentUser();
+        User user= userRepository.findById(userId)
+                .orElseThrow(()-> new IllegalArgumentException("Can't find user with the id: "+userId));
+
+        currentUser.removeFromSubscribeToUsers(userId);
+        userRepository.save(currentUser);
+        log.info("current user unSubscribed to user: {} successfully!", userId);
+
+        user.removeFromSubscribers(currentUser.getId());
+        userRepository.save(user);
+        log.info("user: {} unSubscribed successfully!", currentUser.getId());
+
+        return userMapper.mapToUserResponse(currentUser);
     }
 
     @Override

@@ -23,4 +23,14 @@ public class UserApi implements UserController {
 
         return userService.register(tokenValue);
     }
+
+    @Override
+    public UserResponse subscribeToUser(String userId) {
+        return userService.subscribeToUser(userId);
+    }
+
+    @Override
+    public UserResponse unSubscribeToUser(String userId) {
+        return userService.unSubscribeToUser(userId);
+    }
 }

@@ -6,6 +6,8 @@ import com.freetube.videoservice.entities.User;
 
 public interface UserService {
     UserResponse register(String tokenValue);
+    UserResponse subscribeToUser(String userId);
+    UserResponse unSubscribeToUser(String userId);
     User getCurrentUser();
     Response addToLikedVideos(String videoId);
     Response removeFromLikedVideos(String videoId);
@@ -14,4 +16,6 @@ public interface UserService {
     boolean isLikedVideo(String videoId);
     boolean isDislikedVideo(String videoId);
     void addVideoToHistory(String videoId);
+
+
 }
