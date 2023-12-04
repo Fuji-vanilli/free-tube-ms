@@ -10,7 +10,7 @@ import { VideoService } from '../services/video.service';
 export class VideoDetailsComponent implements OnInit {
 
   videoId!: string;
-  videoUrl: string= '../../assets/VID_b983f472-c36c-40df-a635-016ae62ce836.mp4';
+  videoUrl: string= '../../assets/VID_97b2a5f1-e6fd-49ef-b9d2-95fb5b6fe3e9.mp4';
   videoTitle: string= '';
   videoDescription: string= '';
   videoTags: Array<string>= [];
