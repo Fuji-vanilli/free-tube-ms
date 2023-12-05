@@ -33,6 +33,6 @@ public interface VideoController {
     @GetMapping("allVideo")
     public ResponseEntity<Set<VideoResponse>> allVideos(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size
+            @RequestParam(defaultValue = "10") int size
     );
 }

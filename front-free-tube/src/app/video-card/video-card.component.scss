@@ -1,10 +1,15 @@
 .video-card {
     max-width: 400px;
     width: 300px;
+    height: 300px;
   }
   
   .user-image {
-    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-image: url('../../assets/VID_e122677a-6664-46d7-9b4e-762f57634d9c.jpg');
     background-size: cover;
   }
-  
+
+  img {
+    width: 300px;
+    height: 200px;
+  }

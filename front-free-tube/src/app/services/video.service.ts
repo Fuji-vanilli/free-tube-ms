@@ -27,8 +27,12 @@ export class VideoService {
     return this.http.patch(environment.backEndVideoHost+"/thumbnail", formData); 
   }
 
-  public getDetailsVideo(videoId: string) : Observable<VideoDto>{ 
+  public getDetailsVideo(videoId: string): Observable<VideoDto>{ 
     return this.http.get<VideoDto>(environment.backEndVideoHost+"/details/"+videoId);  
+  }
+
+  public getAllVideos(): Observable<Array<VideoDto>>{
+    return this.http.get<Array<VideoDto>>(environment.backEndVideoHost+"/allVideo");
   }
 
   public saveVideo(videoDto: VideoDto): Observable<VideoDto> { 

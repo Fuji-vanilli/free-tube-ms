@@ -10,7 +10,7 @@ import { VideoService } from '../services/video.service';
 export class VideoDetailsComponent implements OnInit {
 
   videoId!: string;
-  videoUrl: string= '../../assets/VID_97b2a5f1-e6fd-49ef-b9d2-95fb5b6fe3e9.mp4';
+  videoUrl!: string;
   videoTitle: string= '';
   videoDescription: string= '';
   videoTags: Array<string>= [];
@@ -20,23 +20,26 @@ export class VideoDetailsComponent implements OnInit {
   constructor(private routeActivate: ActivatedRoute,
               private videoService: VideoService) {
     this.videoId= this.routeActivate.snapshot.params['videoId'];
-
-  }
-  ngOnInit(): void {
     this.videoService.getDetailsVideo(this.videoId).subscribe({
       next: data=> {
-        this.videoUrl= data.videoUrl;
-        this.videoTitle= data.title;
-        this.videoDescription= data.description; 
-        this.videoTags= data.tags;
-        console.log("video details url: "+this.videoUrl);
+        if (data) {
+          this.videoUrl = data.videoUrl;
+          this.videoTitle = data.title;
+          this.videoDescription = data.description;
+          this.videoTags = data.tags;
+          console.log("video details url: " + this.videoUrl);
+        } else {
+          console.error("No data received from the service");
+        }
       },
       error: err=> {
         console.log(err); 
       }
     })
+
   }
-
-
+  ngOnInit(): void {
+    
+  }
 
 }
