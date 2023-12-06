@@ -1,4 +1,73 @@
 .video-details {
-    margin-top: 50px;
-    margin-left: 100px;
+    padding-top: 15px;
+}
+
+.video-details {
+    margin-top: 20px;
+    margin-left: 50px;
+}
+
+.title-subtitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.subtiltes {
+    margin-left: 5px;
+}
+
+mat-card[ng-reflect-router-link] {
+    cursor: pointer;
+}
+
+button span {
+    font-size: 15px;
+}
+
+.suggestion-bar {
+    margin-top: 10px;
+}
+
+.subscribe-button {
+    justify-content: right;
+    height: 40px;
+    margin-left: 50px;
+}
+.subscribe-button-clicked {
+    background-color: gray;
+    height: 40px;
+    margin-left: 50px;
+}
+
+.view-count {
+    padding-right: 5px;
+}
+
+.video-upload-date {
+    padding-left: 5px; 
+}
+
+.thumbs-up {
+    padding-left: 15px;
+}
+
+.thumbs-down {
+    padding-left: 15px;
+}
+.like-dislike-section { 
+    padding-right: 30px;
+    
+}
+
+.button-liked-disliked {
+    display: flex;
+    align-items: center;
+}
+.dot {
+    border-radius: 50%;
+    width: 8px;
+    height: 8px;
+    background-color: rgb(180, 18, 18);
+    display: inline-block;
 }

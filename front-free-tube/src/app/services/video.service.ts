@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { UploadVideoResponse } from '../upload-video/UploadVideoResponse';
 import { VideoDto } from '../model/video-dto';
+import { UserDto } from '../model/user-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -39,4 +40,11 @@ export class VideoService {
     return this.http.put<VideoDto>(environment.backEndVideoHost+"/saveDetails", videoDto); 
   }
 
+  public likeVideo(videoId: string): Observable<VideoDto> {
+    return this.http.patch<VideoDto>(environment.backEndVideoHost+"/"+videoId+"/like", null);
+  }
+  
+  public dislikeVideo(videoId: string): Observable<VideoDto> {
+    return this.http.patch<VideoDto>(environment.backEndVideoHost+"/"+videoId+"/dislike", null);
+  }
 }

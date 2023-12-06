@@ -1,14 +1,45 @@
 <div fxLayout="row">
     <div *ngIf="videoUrl" fxFlex="65%" class="video-details">
-        <app-video-player [videoUrl]="videoUrl" [videoWidth]="900" [videoHeight]="500"></app-video-player>
+        <app-video-player [videoUrl]="videoUrl" [videoWidth]="1000" [videoHeight]="500"></app-video-player>
         <div class="mat-title mt-3"> {{videoTitle}} </div>
         <div fxLayout="row">
             <div fxFlex="50%">
-                21th November 2023
-                <div> {{videoDescription}} </div>
+                <span class="view-count">{{videoViewCount}} views </span>
+                <span class="dot"></span>
+                <span class="video-upload-date"> 5th December 2023</span>
             </div>
-            <div fxFlex="50%"></div>
+            <div fxFlex="50%"  fxLayoutAlign="end center">
+                <div class="like-dislike-section">
+                    <button mat-flat-button class="thumbs-up" color="basic" (click)="likeVideo()">
+                        <mat-icon color="primary"> {{isLikeVideo ? 'thumb_up_off' : 'thumb_up_off_alt'}} </mat-icon> 
+                        <span>{{videoLikes}}</span>
+                    </button>
+                    <button mat-flat-button class="thumbs-down" color="basic" (click)="dislikeVideo()">
+                        <mat-icon color="warn">{{isDislikeVideo ? 'thumb_down_off' : 'thumb_down_alt'}} </mat-icon>
+                        <span>{{videoDislikes}}</span> 
+                    </button>
+                </div>
+            </div>
         </div>
+        <mat-divider></mat-divider>
+        <mat-card>
+            <mat-card-header class="mb-1">
+                <div class="title-subtitle">
+                    <mat-card-title>Fuji chanel</mat-card-title>
+                    <mat-card-subtitle class="subtiltes">{{userSubscribers}} Subscribers</mat-card-subtitle>
+                </div>
+                <button *ngIf="showSubscribeButton" class="subscribe-button" mat-fab extended color="accent" (click)="subscribeToUser()">Subscribe</button>
+                <button *ngIf="showUnSubscribeButton" class="subscribe-button-clicked" mat-fab extended color="primary" (click)="unSubscribeToUser()">Subscribed</button>
+            </mat-card-header>
+            <div class="ms-3 mb-2">{{videoDescription}}</div>
+            <mat-divider></mat-divider>
+            <mat-chip-listbox class="mt-3 mb-3 ms-2" >
+                <mat-chip-option *ngFor="let tag of videoTags">
+                    {{tag}} 
+                </mat-chip-option>
+            </mat-chip-listbox>
+            <mat-divider></mat-divider>
+        </mat-card>
     </div>
     <div fxFlex="5%">
 

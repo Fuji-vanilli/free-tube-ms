@@ -81,7 +81,7 @@ import { MatCardModule } from '@angular/material/card';
     AuthConfigModule,
     MatSidenavModule,
     MatListModule,
-    MatCardModule
+    MatCardModule,
   ],
   providers: [
     { 

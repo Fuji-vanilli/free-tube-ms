@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -12,6 +13,7 @@ export class HeaderComponent implements OnInit {
   isAuthenticated: boolean= false;
 
   constructor(private oidcSecurityService: OidcSecurityService,
+              private userService: UserService,
               private route: Router) {}
 
   ngOnInit(): void {
@@ -24,11 +26,19 @@ export class HeaderComponent implements OnInit {
 
   login() {
     this.oidcSecurityService.authorize();
-    this.route.navigateByUrl('/upload-video');
-
+    this.route.navigateByUrl('/history');
   }
   logout() {
-    this.oidcSecurityService.logoffAndRevokeTokens();
+    this.oidcSecurityService.logoffAndRevokeTokens();  
     this.isAuthenticated= false;
+  }
+  
+  uploadVideo() {
+    this.route.navigateByUrl("/upload-video"); 
+    console.log("navigate successful");
+  }
+
+  logo() {
+    this.route.navigateByUrl("/featured");
   }
 }

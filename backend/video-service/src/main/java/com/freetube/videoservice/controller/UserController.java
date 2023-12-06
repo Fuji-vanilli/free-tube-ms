@@ -12,6 +12,8 @@ import java.util.Set;
 public interface UserController {
     @GetMapping("register")
     UserResponse register(Authentication authentication);
+    @GetMapping("get/{userId}")
+    UserResponse get(@PathVariable String userId);
     @GetMapping("subscribe/{userId}")
     UserResponse subscribeToUser(@PathVariable String userId);
     @GetMapping("unSubscribe/{userId}")

@@ -29,6 +29,12 @@ public class UserApi implements UserController {
     }
 
     @Override
+    public UserResponse get(String userId) {
+
+        return userService.getUser(userId);
+    }
+
+    @Override
     public UserResponse subscribeToUser(String userId) {
         return userService.subscribeToUser(userId);
     }

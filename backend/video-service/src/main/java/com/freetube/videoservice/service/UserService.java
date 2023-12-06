@@ -20,4 +20,5 @@ public interface UserService {
     boolean isDislikedVideo(String videoId);
     void addVideoToHistory(String videoId);
     Set<String> getUserHistories(String userId);
+    UserResponse getUser(String userId);
 }

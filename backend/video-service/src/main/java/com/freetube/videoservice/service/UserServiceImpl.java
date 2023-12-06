@@ -221,6 +221,14 @@ public class UserServiceImpl implements UserService{
         return user.getVideoHistory();
     }
 
+    @Override
+    public UserResponse getUser(String userId) {
+        User user= userRepository.findById(userId)
+                .orElseThrow(()-> new IllegalArgumentException("Can't find the user with the id: "+userId));
+
+        return userMapper.mapToUserResponse(user);
+    }
+
     private User getUseById(String userId) {
         return userRepository.findById(userId)
                 .orElseThrow(()-> new IllegalArgumentException("Can't find user with the id: "+userId));

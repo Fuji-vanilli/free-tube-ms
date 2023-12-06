@@ -3,6 +3,7 @@ package com.freetube.videoservice.service;
 import com.freetube.videoservice.Utils.Response;
 import com.freetube.videoservice.dto.*;
 import com.freetube.videoservice.entities.Comment;
+import com.freetube.videoservice.entities.User;
 import com.freetube.videoservice.entities.Video;
 import com.freetube.videoservice.enumeration.VideoStatus;
 import com.freetube.videoservice.repository.CommentRepository;
@@ -14,6 +15,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,6 +40,7 @@ public class VideoServiceImpl implements VideoService{
     private final UserService userService;
     private final CommentMapper commentMapper;
     private final CommentRepository commentRepository;
+    private final UserRepository userRepository;
 
     @Override
     public UploadVideoResponse uploadVideo(MultipartFile file) {
@@ -44,8 +48,11 @@ public class VideoServiceImpl implements VideoService{
 
         var video= new Video();
         video.setVideoUrl(videoUrl);
+        video.setUserId(getCurrentUser().getId());
 
         videoRepository.save(video);
+
+
 
         log.info("new video added successfully!");
         return UploadVideoResponse.builder()
@@ -163,7 +170,7 @@ public class VideoServiceImpl implements VideoService{
     }
 
     @Override
-    public Response likeVideo(String videoId) {
+    public VideoResponse likeVideo(String videoId) {
         Video video= getVideo(videoId);
 
         if (userService.isLikedVideo(videoId)) {
@@ -183,18 +190,11 @@ public class VideoServiceImpl implements VideoService{
         log.info("video: {} liked successfully!", videoId);
         videoRepository.save(video);
 
-        return generateResponse(
-                HttpStatus.OK,
-                null,
-                Map.of(
-                        "video", videoMapper.mapToVideoResponse(video)
-                ),
-                "video: "+videoId+" liked successfully!"
-        );
+        return videoMapper.mapToVideoResponse(video);
     }
 
     @Override
-    public Response dislikeVideo(String videoId) {
+    public VideoResponse dislikeVideo(String videoId) {
         Video video= getVideo(videoId);
 
         if (userService.isDislikedVideo(videoId)) {
@@ -214,14 +214,7 @@ public class VideoServiceImpl implements VideoService{
         log.info("video: {} disliked successfully!", videoId);
         videoRepository.save(video);
 
-        return generateResponse(
-                HttpStatus.OK,
-                null,
-                Map.of(
-                        "video", videoMapper.mapToVideoResponse(video)
-                ),
-                "video: "+videoId+" disliked successfully!"
-        );
+        return videoMapper.mapToVideoResponse(video);
     }
  
     @Override
@@ -276,5 +269,15 @@ public class VideoServiceImpl implements VideoService{
     private Video getVideo(String videoId) {
         return videoRepository.findById(videoId)
                 .orElseThrow(()-> new IllegalArgumentException("Can't find video with the id: "+videoId));
+    }
+
+    public User getCurrentUser() {
+        //final String sub = ((Jwt) (SecurityContextHolder.getContext().getAuthentication().getPrincipal())).getClaim("sub");
+
+        final Jwt principal = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        final String sub = principal.getClaim("sub");
+
+        return userRepository.findBySub(sub)
+                .orElseThrow(()-> new IllegalArgumentException("Can't find user with the sub: "+sub+" into the database!"));
     }
 }

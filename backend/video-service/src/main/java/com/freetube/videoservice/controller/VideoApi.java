@@ -45,12 +45,12 @@ public class VideoApi implements VideoController {
     }
 
     @Override
-    public ResponseEntity<Response> likeVideo(String videoId) {
+    public ResponseEntity<VideoResponse> likeVideo(String videoId) {
         return ResponseEntity.ok(videoService.likeVideo(videoId));
     }
 
     @Override
-    public ResponseEntity<Response> dislikeVideo(String videoId) {
+    public ResponseEntity<VideoResponse> dislikeVideo(String videoId) {
         return ResponseEntity.ok(videoService.dislikeVideo(videoId));
     }
 

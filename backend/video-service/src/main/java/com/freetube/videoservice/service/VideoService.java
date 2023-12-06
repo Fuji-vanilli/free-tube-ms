@@ -14,8 +14,8 @@ public interface VideoService {
     Response editVideo(VideoRequest videoRequest);
     Response uploadThumbnail(MultipartFile file, String videoId);
     VideoResponse getDetailsVideo(String videoId);
-    Response likeVideo(String videoId);
-    Response dislikeVideo(String videoId);
+    VideoResponse likeVideo(String videoId);
+    VideoResponse dislikeVideo(String videoId);
     void increaseVideoCount(Video video);
     CommentResponse addComment(String videoId, CommentRequest request);
     Set<CommentResponse> allComments(String videoId);
