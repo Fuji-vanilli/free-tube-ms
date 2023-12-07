@@ -1,9 +1,9 @@
 <mat-card class="video-card" [routerLink]="'/video-details/'+videoDto.id">
     <img mat-card-image [src]="videoDto.thumbnailUrl" alt="{{videoDto.title}}">
-    <mat-card-header>
+    <mat-card-header class="card-header">
         <div mat-card-avatar class="user-image"></div>
-        <mat-card-title>{{videoDto.title}}</mat-card-title>
-        <mat-card-subtitle>{{videoDto.description}}</mat-card-subtitle>
-        <mat-card-subtitle>{{videoDto.viewCount}} views</mat-card-subtitle>
+        <mat-card-title style="color: white; font-size: 16px;">{{videoDto.title}}</mat-card-title>
+        <mat-card-subtitle style="color: #9ca3af;">{{videoDto.description}}</mat-card-subtitle>
+        <mat-card-subtitle style="color: #d1d5db;">{{videoDto.viewCount}} views</mat-card-subtitle>
       </mat-card-header>
 </mat-card>

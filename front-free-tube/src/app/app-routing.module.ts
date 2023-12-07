@@ -18,7 +18,7 @@ const routes: Routes = [
     { path: 'liked-video', component: LikedVideosComponent},
   ]},
   { path: "upload-video", component: UploadVideoComponent },
-  { path: "save-video-details/:videoId", component:SaveVideoDetailsComponent },
+  { path: "save-video-details/:videoId", component:SaveVideoDetailsComponent }, 
   { path: "video-details/:videoId", component: VideoDetailsComponent }
 ];
 

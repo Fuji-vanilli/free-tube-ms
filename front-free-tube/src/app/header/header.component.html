@@ -1,15 +1,21 @@
-<mat-toolbar color="primary">
+<mat-toolbar class="toolbar">
     <mat-toolbar-row>
-      <button mat-fab extended color="link" (click)="logo()">Fuji-C</button>
+      <button class="logo-button" mat-fab extended color="accent" (click)="logo()">
+        <mat-icon>settings</mat-icon>
+        Fuji-C</button>
       <span class="spacer"></span>
-      <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" (click)="uploadVideo()">
+      <button mat-icon-button class="video-call" aria-label="Example icon-button with heart icon" (click)="uploadVideo()">
         <mat-icon>video_call</mat-icon>
       </button>
-      <button *ngIf="isAuthenticated; else noAuth" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" (click)="logout()">
-        <mat-icon>account_circle</mat-icon>
+      <button mat-icon-button class="notifications" aria-label="Example icon-button with heart icon">
+        <mat-icon matBadge="1" matBadgeColor="accent">notifications</mat-icon>
+      </button>
+      <button *ngIf="isAuthenticated; else noAuth" mat-icon-button class="account" aria-label="Example icon-button with share icon" (click)="logout()">
+        <mat-icon>account_circle</mat-icon> 
       </button>
       <ng-template #noAuth>
-        <button mat-raised-button color="accent" (click)="login()">
+        <button class="login-button" mat-fab extended color="accent" (click)="login()"> 
+          <mat-icon>login</mat-icon> 
           Login
         </button>
       </ng-template>

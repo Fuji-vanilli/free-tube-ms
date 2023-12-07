@@ -4,18 +4,14 @@
     (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
         <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
   
-            Drag and Drop videos in this secton (or)
-            <button class="btn btn-primary ms-2" type="button" (click)="openFileSelector()">Browse Files</button>
+            <span>Drag and Drop videos in this secton (or)</span>
+            <button class="btn ms-2" type="button" (click)="openFileSelector()">Browse Files</button>
         </ng-template>
     </ngx-file-drop>
-    <div class="upload-table">
-        <table class="table">
-            <tbody class="upload-name-style">
-                <tr *ngFor="let item of files; let i=index">
-                    <td><strong>{{ item.relativePath }}</strong></td> 
-                </tr>
-            </tbody>
-        </table>
+    <div class="upload-name">
+        <div *ngFor="let item of files; let i=index">
+            <strong style="color: white;">{{ item.relativePath }}</strong>
+        </div>
     </div>
     <div class="button-upload" >
         <button mat-fab extended color="accent" *ngIf="this.fileUploaded" (click)="uploadVideo()">Upload video</button>

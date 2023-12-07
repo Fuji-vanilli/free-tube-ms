@@ -28,16 +28,17 @@ export class HeaderComponent implements OnInit {
     this.oidcSecurityService.authorize();
     this.route.navigateByUrl('/history');
   }
-  logout() {
-    this.oidcSecurityService.logoffAndRevokeTokens();  
-    this.isAuthenticated= false;
-  }
   
-  uploadVideo() {
-    this.route.navigateByUrl("/upload-video"); 
-    console.log("navigate successful");
+  logout() {
+    this.oidcSecurityService.logoffAndRevokeTokens();      
+    this.isAuthenticated= false;  
   }
 
+  uploadVideo() {
+    this.route.navigateByUrl("/upload-video");  
+    console.log("navigate successful");
+  }
+  
   logo() {
     this.route.navigateByUrl("/featured");
   }
