@@ -15,6 +15,7 @@
 
 .subtiltes {
     margin-left: 5px;
+    color: #cbd5e1;
 }
 
 mat-card[ng-reflect-router-link] {
@@ -71,3 +72,36 @@ button span {
     background-color: rgb(180, 18, 18);
     display: inline-block;
 }
+
+.video-details {
+    color: white;
+}
+
+.header-title {
+    padding: 10px;
+}
+
+.video-title {
+    font-size: 18px;
+    //font-weight: bold;
+}
+
+.description-video {
+    background: #1f2937;
+}
+
+.view-count, .video-upload-date { 
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+.card-container {
+    background: #27272a;
+    margin: 2px;
+    margin-bottom: 20px;
+}
+
+.container-video-player {
+    background: #1f2937;
+}
+

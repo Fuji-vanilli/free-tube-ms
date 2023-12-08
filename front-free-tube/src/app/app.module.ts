@@ -40,6 +40,7 @@ import { FeaturedComponent } from './featured/featured.component';
 import { VideoCardComponent } from './video-card/video-card.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatBadgeModule } from '@angular/material/badge';
+import { FileUploadComponent } from './file-upload/file-upload.component';
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import { MatBadgeModule } from '@angular/material/badge';
     LikedVideosComponent,
     SidebarComponent,
     FeaturedComponent,
-    VideoCardComponent
+    VideoCardComponent,
+    FileUploadComponent
   ],
   imports: [
     BrowserModule,
