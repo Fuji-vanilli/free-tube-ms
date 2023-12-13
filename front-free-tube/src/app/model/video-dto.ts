@@ -1,15 +1,15 @@
-export interface VideoDto {
-    id: string;
-    description: string;
-    title: string;
+export interface VideoDto { 
+    id: string; 
+    description: string; 
+    title: string; 
     userId: string;
-    likeCount: number;
-    dislikeCount: number;
-    likes: number;
+    likeCount: number;     
+    dislikeCount: number; 
+    likes: number;        
     dislikes: number;
-    viewCount: number;
+    viewCount: number;    
     videoUrl: '';
-    tags: Array<string>;
-    videoStatus: string;
-    thumbnailUrl: string;
+    tags: Array<string>;  
+    videoStatus: string;   
+    thumbnailUrl: string;  
 }
